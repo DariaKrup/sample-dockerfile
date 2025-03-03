@@ -1,5 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.*
-import jetbrains.buildServer.configs.kotlin.buildFeatures.dockerSupport
+import jetbrains.buildServer.configs.kotlin.buildFeatures.dockerRegistryConnections
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.buildSteps.DockerCommandStep
 import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
@@ -36,6 +36,10 @@ project {
 
     buildType(Pull)
     buildType(Build)
+
+    params {
+        param("build", "build")
+    }
 
     features {
         dockerRegistry {
@@ -89,7 +93,7 @@ object Build : BuildType({
     features {
         perfmon {
         }
-        dockerSupport {
+        dockerRegistryConnections {
             cleanupPushedImages = true
             loginToRegistry = on {
                 dockerRegistryId = "PROJECT_EXT_3"
@@ -111,7 +115,7 @@ object Pull : BuildType({
     }
 
     features {
-        dockerSupport {
+        dockerRegistryConnections {
             loginToRegistry = on {
                 dockerRegistryId = "PROJECT_EXT_3,PROJECT_EXT_4"
             }
